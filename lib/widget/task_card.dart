@@ -1,39 +1,46 @@
 import 'package:flutter/material.dart';
 
-class ToDoList extends StatelessWidget {
+class TaskCard extends StatelessWidget {
   final String task;
   final bool isCompleted;
+  final Function(bool?) onCheckboxChanged;
+  final Function() onDelete;
 
-  const ToDoList({super.key, required this.task, required this.isCompleted});
+  const TaskCard({
+    super.key,
+    required this.task,
+    required this.isCompleted,
+    required this.onCheckboxChanged,
+    required this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       elevation: 2,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: ListTile(
           leading: Checkbox(
-            value: isCompleted, 
-            onChanged: (value){
-              //functions
-            },
-            activeColor: Colors.yellow,
+            value: isCompleted,
+            onChanged: onCheckboxChanged,
+            activeColor: Colors.yellow[500],
           ),
-        
           title: Text(
             task,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 16,
               decoration: isCompleted ? TextDecoration.lineThrough : null,
-              color: isCompleted ? Colors.grey : null
+              color: isCompleted ? Colors.grey : Colors.black,
             ),
           ),
-          trailing: IconButton(onPressed: (){}, icon: Icon(Icons.delete, color: Colors.red,)),
+          trailing: IconButton(
+            icon: Icon(Icons.delete, color: Colors.red[600]),
+            onPressed: onDelete,
+          ),
         ),
-      ) 
+      ),
     );
   }
 }
-   
